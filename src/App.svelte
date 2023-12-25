@@ -7,6 +7,7 @@
   import twitter from "./assets/twitter.svg";
   import instagram from "./assets/instagram.svg";
   import circle from "./assets/circle.png";
+  import rect from "./assets/Middle-Rectangle.svg"
   import vectors from "./assets/vector group.jpg";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { Rive } from "@rive-app/canvas";
@@ -103,15 +104,15 @@
 
 <main class="relative">
   <img src={vectors} class="absolute top-0 left-0 w-full h-full" alt="" />
-
+  <!-- Container for logo and text -->
+  <div class="logo-box flex flex-col justify-center items-center">
+    <img src={logo} class="w-[80px]" alt="" />
+  </div>
   <div
-    class="w-full flex flex-col justify-center items-center pb-10 overflow-hidden"
+    class="w-full flex flex-col justify-center items-center pb-10 overflow-hidden relative"
   >
-    <!-- Container for logo and text -->
-    <div class="logo-box flex flex-col justify-center items-center">
-      <img src={logo} class="w-[80px]" alt="" />
-    </div>
-
+  <!-- Rectangle vector that kinda fades in from the heading -->
+  <img class="h-[60%] w-[90%] -850:w-[98%] -850:h-[80%] left-[50%] translate-x-[-50%] absolute top-0" src={rect} alt="">
     <h1
       bind:this={heading}
       class="z-20 relative font-cascadiaMono heading text-4xl -950:text-3xl -500:text-2xl text-center max-w-[700px] font-semibold"
