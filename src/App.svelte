@@ -162,7 +162,7 @@
         ".input-box",
         {
           y: 200,
-          x: "0%",
+          x: "-50%",
           opacity: 0,
           // scrollTrigger: {
           //   trigger: ".input-box-container",
@@ -173,7 +173,11 @@
         {
           opacity: 1,
           y: 0,
+          x: '-50%',
           stagger: 0.3,
+          onComplete:()=>{
+            document.querySelectorAll('.input-box').forEach(inp=> inp.classList.add('shifted'))
+          }
         }
       );
   }

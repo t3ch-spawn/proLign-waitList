@@ -12,9 +12,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.heading .word {
-  margin-right: 10px;
-}
 
 main > div > * {
   margin-top: 60px;
@@ -27,6 +24,10 @@ main > div > * {
   background-color: #ff3b0e;
   color: white;
 }
+/* 
+*:not(#loader-canvas){
+  opacity: 1!important;
+} */
 
 .subscribe-btn:focus {
   background: black;
@@ -38,10 +39,15 @@ main > div > * {
   transition: 0.3s;
 }
 
-.input-box {
+/* 
+.input-box.shifted{
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, 0%) !important;
+} */
+
+.input-box{
   opacity: 0;
+  left: 50%;
 }
 
 #loader-canvas.active {
