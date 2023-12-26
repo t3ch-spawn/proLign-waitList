@@ -1,46 +1,55 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap");
 @font-face {
-  font-family: 'Cascadia Mono';
-  src: url('../public/CascadiaMono/CascadiaMono.ttf') format('truetype');
+  font-family: "Cascadia Mono";
+  src: url("../public/CascadiaMono/CascadiaMono.ttf") format("truetype");
 }
 @font-face {
-  font-family: 'Franklin Gothic Book';
-  src: url('../public/franklin-gothic-book.ttf') format('truetype');
+  font-family: "Franklin Gothic Book";
+  src: url("../public/franklin-gothic-book.ttf") format("truetype");
 }
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-.heading .word{
-    margin-right: 10px;
-  }
+.heading .word {
+  margin-right: 10px;
+}
 
-main > div > *{
+main > div > * {
   margin-top: 60px;
   position: relative;
   z-index: 20;
 }
 
 /* Css that controls the state of the submit button when typing in the input field */
-.inputEl:focus + .subscribe-btn{
-
-  background-color: #FF3B0E;
+.inputEl:focus + .subscribe-btn {
+  background-color: #ff3b0e;
   color: white;
-
 }
 
-.subscribe-btn:focus{
+.subscribe-btn:focus {
   background: black;
   color: white;
   border: 1px solid black;
 }
 
-.follow-btn:hover{
+.follow-btn:hover {
   transition: 0.3s;
 }
 
-.input-box{
+.input-box {
   left: 50%;
   transform: translateX(-50%);
+  opacity: 0;
+}
+
+#loader-canvas.active {
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.2s ease-in-out;
+}
+
+.heading .word {
+  opacity: 0;
 }
