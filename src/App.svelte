@@ -60,11 +60,11 @@
           const inputs = loader.stateMachineInputs("proLign loader");
           setTimeout(() => {
             inputs[0].fire();
-          }, 3000);
+          }, 2500);
 
           setTimeout(() => {
             loader.stop();
-          }, 5500);
+          }, 5000);
           console.log("hasLoaded");
         },
         onStop: () => {
