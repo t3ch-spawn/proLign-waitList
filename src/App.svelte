@@ -10,7 +10,7 @@
   import rect from "./assets/Middle-Rectangle.svg";
   import cross from "./assets/cross.svg";
   import mail from "./assets/mail.svg";
-  import vectorsMobile from "./assets/vector-mobile.jpg"
+  import vectorsMobile from "./assets/vector-mobile.jpg";
   import vectors from "./assets/vector group.jpg";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { Rive } from "@rive-app/canvas";
@@ -168,12 +168,12 @@
         ".social-icon",
         {
           y: 100,
-          stagger: 0.3,
           opacity: 0,
         },
         {
           y: 0,
           opacity: 1,
+          stagger: 0.2,
         }
       )
       .fromTo(
@@ -285,7 +285,9 @@
     <div class="success-animation max-w-[300px]"></div>
 
     <!-- Typography -->
-    <h2 class="font-cascadiaMono text-3xl -500:text-2xl font-semibold max-w-[400px]">
+    <h2
+      class="font-cascadiaMono text-3xl -500:text-2xl font-semibold max-w-[400px]"
+    >
       We've added you to our waiting list
     </h2>
     <p class="font-franklinGoth">We’ll let you when prolign is ready.</p>
@@ -304,8 +306,16 @@
   </section>
 
   <!-- Background image that has the stars and the lines -->
-  <img src={vectors} class="absolute top-0 left-0 w-full h-full -500:hidden" alt="" />
-  <img src={vectorsMobile} class="absolute top-0 left-0 w-full h-full hidden -500:block" alt="" />
+  <img
+    src={vectors}
+    class="absolute top-0 left-0 w-full h-full -500:hidden"
+    alt=""
+  />
+  <img
+    src={vectorsMobile}
+    class="absolute top-0 left-0 w-full h-full hidden -500:block"
+    alt=""
+  />
 
   <!-- Container for logo and text -->
   <div class="logo-box opacity-0 flex flex-col justify-center items-center">
