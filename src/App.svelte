@@ -358,7 +358,7 @@
       >
 
       <!--container for social icons -->
-      <div class="flex gap-4 items-center justify-center">
+      <div class="flex gap-4 mt-[-30px] items-center justify-center">
         <img
           class="social-icon opacity-0 cursor-pointer"
           src={linkedIn}
