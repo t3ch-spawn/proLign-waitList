@@ -81,7 +81,8 @@ main > div > * {
   left: 50%;
   transform: translateX(-50%);
   animation-duration: 0.4s;
-  max-width: 400px;
+  max-width: 380px;
+  width: 90%;
   animation-fill-mode: forwards;
   text-align: center;
   border-radius: 3px;
