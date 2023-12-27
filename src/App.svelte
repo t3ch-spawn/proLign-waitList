@@ -249,7 +249,7 @@
   }
 </script>
 
-<main class="relative">
+<main class="relative p-[15px]">
   <!-- Container for the loader -->
   <section
     class="loader-overlay fixed w-full h-full left-0 top-0 bg-primOrange z-40 flex flex-col justify-center items-center"
