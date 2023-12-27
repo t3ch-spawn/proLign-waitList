@@ -5,7 +5,7 @@ export default {
     extend: {
       colors: {
         primOrange: "#FF3B0E",
-        overlay: "rgb(0, 0, 0, 0.2)",
+        overlay: "rgb(0, 0, 0, 0.5)",
         lightOrange: "#FCE3C8",
         creamBg: "#FFFAF6",
         lightOrange: '#FCE3C8;',

@@ -8,9 +8,16 @@
   import instagram from "./assets/instagram.svg";
   import circle from "./assets/circle.png";
   import rect from "./assets/Middle-Rectangle.svg";
+  import cross from "./assets/cross.svg";
+  import mail from "./assets/mail.svg";
+  import vectorsMobile from "./assets/vector-mobile.jpg"
   import vectors from "./assets/vector group.jpg";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { Rive } from "@rive-app/canvas";
+  import lottie from "lottie-web";
+  import Toastify from "toastify-js";
+
+  import successAnimation from "./assets/https___lottiefiles.com_animations_confirmation-1WAplc448A (1).json";
 
   let heading;
   let ballClick;
@@ -20,7 +27,10 @@
   let inputEl;
   let subscribeBtn;
   let isBtnActive = false;
-
+  let hasSubscribed = false;
+  let successAnim;
+  let userMail;
+  let formEl;
   onMount(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -65,10 +75,10 @@
           setTimeout(() => {
             loader.stop();
           }, 5000);
-          console.log("hasLoaded");
+          // console.log("hasLoaded");
         },
         onStop: () => {
-          console.log("hi there");
+          // console.log("hi there");
           gsap.to(".loader-overlay", {
             height: 0,
             duration: 1,
@@ -83,6 +93,14 @@
           });
         },
       });
+    });
+
+    // LOTTIE ANIMATION
+    successAnim = lottie.loadAnimation({
+      container: document.querySelector(".success-animation"),
+      animationData: successAnimation,
+      loop: false,
+      autoplay: false,
     });
   });
 
@@ -173,13 +191,61 @@
         {
           opacity: 1,
           y: 0,
-          x: '-50%',
+          x: "-50%",
           stagger: 0.3,
-          onComplete:()=>{
-            document.querySelectorAll('.input-box').forEach(inp=> inp.classList.add('shifted'))
-          }
+          onComplete: () => {
+            document
+              .querySelectorAll(".input-box")
+              .forEach((inp) => inp.classList.add("shifted"));
+          },
         }
       );
+  }
+
+  function toggleSuccess() {
+    hasSubscribed = !hasSubscribed;
+    if (!hasSubscribed) {
+      successAnim.setDirection(-1);
+      successAnim.play();
+    }
+  }
+
+  function subscribeUser(e) {
+    // Function that creates toastify message
+    function createToastify(message) {
+      let time = 2000;
+      Toastify({
+        text: message,
+        className: "toastify-note",
+        duration: time,
+        stopOnFocus: false,
+        // @ts-ignore
+      }).showToast();
+      const loadingBar = document.createElement("div");
+      loadingBar.classList.add("toasty-loadingBar");
+      document.querySelector(".toastify-note").appendChild(loadingBar);
+      setTimeout(() => {
+        loadingBar.style.width = "0%";
+      }, 500);
+    }
+    e.preventDefault();
+
+    if (inputEl.value.trim() == "") {
+      createToastify("Please enter your mail!");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (emailRegex.test(inputEl.value.trim())) {
+      userMail = inputEl.value.trim();
+      hasSubscribed = true;
+      successAnim.setDirection(1);
+      successAnim.play();
+      inputEl.value = "";
+    } else {
+      createToastify("Please enter a valid mail!");
+    }
   }
 </script>
 
@@ -194,11 +260,52 @@
       height="500"
       width="500"
     ></canvas>
-
-    <!-- <button on:click={RevealPage}>FInished</button> -->
   </section>
 
-  <img src={vectors} class="absolute top-0 left-0 w-full h-full" alt="" />
+  <!-- overlay that pops up when success comes up -->
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <!-- svelte-ignore a11y-no-static-element-interactions -->
+  <div
+    on:click={toggleSuccess}
+    class:active={hasSubscribed}
+    class="overlay z-[25] fixed w-full h-full top-0 left-0 bg-overlay opacity-0 pointer-events-none"
+  ></div>
+
+  <!-- Container for pop up when the user signs up -->
+  <section
+    class:active={hasSubscribed}
+    class="success-container opacity-0 pointer-events-none flex flex-col justify-center items-center text-center fixed gap-[30px] z-30 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] max-w-[600px] w-[90%] bg-white p-8 rounded-md"
+  >
+    <!-- Cross btn -->
+    <button on:click={toggleSuccess} class="absolute top-4 right-4"
+      ><img src={cross} alt="" /></button
+    >
+
+    <!-- container for lottie success animation -->
+    <div class="success-animation max-w-[300px]"></div>
+
+    <!-- Typography -->
+    <h2 class="font-cascadiaMono text-3xl font-semibold max-w-[400px]">
+      We've added you to our waiting list
+    </h2>
+    <p class="font-franklinGoth">We’ll let you when prolign is ready.</p>
+
+    <!-- Container for div that shows the email -->
+    <div
+      class="bg-lightOrange flex justify-center items-center w-full h-[80px] rounded-[5px]"
+    >
+      <div
+        class="bg-white w-[80%] h-[50%] rounded-[5px] flex justify-start items-center gap-2 px-4"
+      >
+        <img class="h-[80%]" src={mail} alt="" />
+        <p class="font-franklinGoth">{userMail}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Background image that has the stars and the lines -->
+  <img src={vectors} class="absolute top-0 left-0 w-full h-full -500:hidden" alt="" />
+  <img src={vectorsMobile} class="absolute top-0 left-0 w-full h-full hidden -500:block" alt="" />
 
   <!-- Container for logo and text -->
   <div class="logo-box opacity-0 flex flex-col justify-center items-center">
@@ -287,23 +394,26 @@
             Sign up to be the first to receive an email when it is launched
           </p>
         </div>
-        <!-- Container for the input and the button -->
-        <div
+        <!-- Form for the input and the button -->
+        <form
           class="w-full gap-6 flex items-center justify-start flex-wrap -850:justify-center"
+          bind:this={formEl}
         >
           <input
             bind:this={inputEl}
-            type="text"
+            type="email"
+            required
             class="inputEl font-grotesk border-black border-[1px] rounded-xl p-3 px-6 w-full max-w-[550px]"
             placeholder="steven@gmail.com"
           />
           <button
+            on:click={subscribeUser}
             class:active={isBtnActive}
             bind:this={subscribeBtn}
             class="subscribe-btn bg-lightOrange border-primOrange border-[1px] text-primOrange p-3 px-5 rounded-xl font-bold hover:bg-lightOrange hover:text-primOrange hover:bg-white duration-300"
             >Subscribe</button
           >
-        </div>
+        </form>
       </div>
     </div>
 
@@ -314,4 +424,18 @@
 </main>
 
 <style>
+  .success-container,
+  .overlay {
+    transition: 0.3s;
+  }
+
+  .success-container.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
 </style>

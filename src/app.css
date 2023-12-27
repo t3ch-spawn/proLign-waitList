@@ -12,21 +12,30 @@
 @tailwind components;
 @tailwind utilities;
 
-
 main > div > * {
   margin-top: 60px;
   position: relative;
   z-index: 20;
 }
 
+
+@media screen and (max-width: 500px) {
+  main > div > * {
+    margin-top: 40px;
+    position: relative;
+    z-index: 20;
+  }
+}
+
+
 /* Css that controls the state of the submit button when typing in the input field */
 .inputEl:focus + .subscribe-btn {
   background-color: #ff3b0e;
   color: white;
 }
-/* 
-*:not(#loader-canvas){
-  opacity: 1!important;
+
+/* *:not(#loader-canvas):not(.overlay):not(.success-container) {
+  opacity: 1 !important;
 } */
 
 .subscribe-btn:focus {
@@ -45,7 +54,7 @@ main > div > * {
   transform: translate(-50%, 0%) !important;
 } */
 
-.input-box{
+.input-box {
   opacity: 0;
   left: 50%;
 }
@@ -58,4 +67,48 @@ main > div > * {
 
 .heading .word {
   opacity: 0;
+}
+
+.toastify-note {
+  z-index: 35;
+  padding: 10px;
+  padding-inline: 40px;
+  position: fixed;
+  top: 0px;
+  background-color: #ff3b0e;
+  color: white;
+  animation: toastyAnimation;
+  left: 50%;
+  transform: translateX(-50%);
+  animation-duration: 0.4s;
+  max-width: 400px;
+  animation-fill-mode: forwards;
+  text-align: center;
+  border-radius: 3px;
+  font-family: "Cascadia Mono";
+}
+
+@keyframes toastyAnimation {
+  0% {
+    transform: translateX(100%);
+  }
+
+  50% {
+    transform: translatex(-100%);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.toasty-loadingBar {
+  height: 3px;
+  width: 100%;
+  border-radius: 1px;
+  background: white;
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  transition: 2s;
 }

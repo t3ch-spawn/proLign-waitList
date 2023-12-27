@@ -17,9 +17,13 @@
     "vite": "^5.0.8"
   },
   "dependencies": {
+    "@dotlottie/player-component": "^1.0.3",
     "@rive-app/canvas": "^2.9.0",
     "gsap": "^3.12.4",
+    "lottie-web": "^5.12.2",
     "rive-js": "^0.7.33",
-    "split-type": "^0.3.4"
+    "split-type": "^0.3.4",
+    "toastify": "^2.0.1",
+    "toastify-js": "^1.12.0"
   }
 }
