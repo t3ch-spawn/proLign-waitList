@@ -18,14 +18,14 @@ main > div > * {
   z-index: 20;
 }
 
-
+/* 
 @media screen and (max-width: 500px) {
   main > div > * {
     margin-top: 40px;
     position: relative;
     z-index: 20;
   }
-}
+} */
 
 
 /* Css that controls the state of the submit button when typing in the input field */
