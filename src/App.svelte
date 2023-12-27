@@ -285,7 +285,7 @@
     <div class="success-animation max-w-[300px]"></div>
 
     <!-- Typography -->
-    <h2 class="font-cascadiaMono text-3xl font-semibold max-w-[400px]">
+    <h2 class="font-cascadiaMono text-3xl -500:text-2xl font-semibold max-w-[400px]">
       We've added you to our waiting list
     </h2>
     <p class="font-franklinGoth">We’ll let you when prolign is ready.</p>
@@ -295,7 +295,7 @@
       class="bg-lightOrange flex justify-center items-center w-full h-[80px] rounded-[5px]"
     >
       <div
-        class="bg-white w-[80%] h-[50%] rounded-[5px] flex justify-start items-center gap-2 px-4"
+        class="bg-white w-[90%] h-[50%] rounded-[5px] flex justify-start items-center gap-2 px-4"
       >
         <img class="h-[80%]" src={mail} alt="" />
         <p class="font-franklinGoth">{userMail}</p>
