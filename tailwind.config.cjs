@@ -8,7 +8,7 @@ export default {
         overlay: "rgb(0, 0, 0, 0.5)",
         lightOrange: "#FCE3C8",
         creamBg: "#FFFAF6",
-        lightOrange: '#FCE3C8;',
+        emailNum: 'rgba(0, 0, 0, 0.30)'
       },
 
       fontFamily: {

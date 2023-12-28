@@ -15,9 +15,31 @@
   import { ScrollTrigger } from "gsap/ScrollTrigger";
   import { Rive } from "@rive-app/canvas";
   import lottie from "lottie-web";
+  import successAnimation from "./assets/https___lottiefiles.com_animations_confirmation-1WAplc448A (1).json";
   import Toastify from "toastify-js";
 
-  import successAnimation from "./assets/https___lottiefiles.com_animations_confirmation-1WAplc448A (1).json";
+  import { initializeApp } from "firebase/app";
+  import { firebaseConfig } from "./lib/firebaseConfig";
+  import {
+    getFirestore,
+    collection,
+    onSnapshot,
+    addDoc,
+  } from "firebase/firestore";
+
+  const firebaseApp = initializeApp(firebaseConfig);
+  const db = getFirestore();
+  const collectionRef = collection(db, "emails");
+  let emailsArr = [];
+  const unsubscribe = onSnapshot(collectionRef, (querySnapshot) => {
+    let fbEmailsArr = [];
+    querySnapshot.forEach((doc) => {
+      let email = { ...doc.data(), id: doc.id };
+      fbEmailsArr = [...fbEmailsArr, email];
+    });
+
+    emailsArr = fbEmailsArr;
+  });
 
   let heading;
   let ballClick;
@@ -28,9 +50,11 @@
   let subscribeBtn;
   let isBtnActive = false;
   let hasSubscribed = false;
+  let hasRegisteredFb = true;
   let successAnim;
   let userMail;
   let formEl;
+  let numberOfCurrUser;
   onMount(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -210,7 +234,7 @@
     }
   }
 
-  function subscribeUser(e) {
+  async function subscribeUser(e) {
     // Function that creates toastify message
     function createToastify(message) {
       let time = 2000;
@@ -239,6 +263,26 @@
 
     if (emailRegex.test(inputEl.value.trim())) {
       userMail = inputEl.value.trim();
+
+      // check if the user is in the db already
+      let userExist = emailsArr.find(
+        (email) => email.email.toLowerCase() === userMail.toLowerCase()
+      );
+      if (userExist) {
+        createToastify("You have already subscribed with this email!");
+        return;
+      }
+
+      // Update firebase database
+      // Add a new document with a generated id.
+      hasRegisteredFb = false;
+      const docRef = await addDoc(collection(db, "emails"), {
+        email: userMail,
+      }).then((data) => {
+        numberOfCurrUser = emailsArr.length;
+        hasRegisteredFb = true;
+      });
+
       hasSubscribed = true;
       successAnim.setDirection(1);
       successAnim.play();
@@ -297,10 +341,14 @@
       class="bg-lightOrange flex justify-center items-center w-full h-[80px] rounded-[5px]"
     >
       <div
-        class="bg-white w-[90%] h-[50%] rounded-[5px] flex justify-start items-center gap-2 px-4"
+        class="bg-white w-[90%] h-[50%] rounded-[5px] flex justify-between items-center gap-2 px-4"
       >
-        <img class="h-[80%]" src={mail} alt="" />
-        <p class="font-franklinGoth">{userMail}</p>
+        <div class="flex gap-2 items-center justify-start">
+          <img class="h-[80%]" src={mail} alt="" />
+          <p class="font-franklinGoth">{userMail}</p>
+        </div>
+
+        <p class="text-emailNum">#{numberOfCurrUser}</p>
       </div>
     </div>
   </section>
@@ -420,9 +468,20 @@
             on:click={subscribeUser}
             class:active={isBtnActive}
             bind:this={subscribeBtn}
-            class="subscribe-btn bg-lightOrange border-primOrange border-[1px] text-primOrange p-3 px-5 rounded-xl font-bold hover:bg-lightOrange hover:text-primOrange hover:bg-white duration-300"
-            >Subscribe</button
+            class={`subscribe-btn ${
+              hasRegisteredFb
+                ? ""
+                : "!bg-emailNum hover:text-transparent border-none text-transparent cursor-not-allowed"
+            } bg-lightOrange border-primOrange border-[1px] text-primOrange p-3 px-5 rounded-xl font-bold hover:text-primOrange hover:bg-white duration-300 relative`}
           >
+            <div
+              class={`subscribe-spinner ${
+                hasRegisteredFb ? "!hidden" : "flex"
+              }`}
+            ></div>
+
+            <p class={` ${hasRegisteredFb ? "opacity-1" : "opacity-0 text-transparent"}`}>Subscribe</p>
+          </button>
         </form>
       </div>
     </div>
