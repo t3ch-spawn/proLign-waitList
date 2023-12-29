@@ -293,7 +293,7 @@
   }
 </script>
 
-<main class="relative p-[15px]">
+<main class="relative p-[15px] overflow-x-hidden">
   <!-- Container for the loader -->
   <section
     class="loader-overlay fixed w-full h-full left-0 top-0 bg-primOrange z-40 flex flex-col justify-center items-center"
@@ -318,7 +318,7 @@
   <!-- Container for pop up when the user signs up -->
   <section
     class:active={hasSubscribed}
-    class="success-container opacity-0 pointer-events-none flex flex-col justify-center items-center text-center fixed gap-[30px] z-30 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] max-w-[600px] w-[90%] bg-white p-8 rounded-md"
+    class="success-container opacity-0 pointer-events-none flex flex-col justify-center items-center text-center fixed gap-[30px] z-30 top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] max-w-[600px] w-[90%] bg-white p-8 -350:p-4 rounded-md -350:max-h-[475px] -350:gap-[10px]"
   >
     <!-- Cross btn -->
     <button on:click={toggleSuccess} class="absolute top-4 right-4"
@@ -330,7 +330,7 @@
 
     <!-- Typography -->
     <h2
-      class="font-cascadiaMono text-3xl -500:text-2xl font-semibold max-w-[400px]"
+      class="font-cascadiaMono text-3xl -500:text-2xl font-semibold max-w-[400px] -350:text-[1.2rem]"
     >
       We've added you to our waiting list
     </h2>
@@ -338,10 +338,10 @@
 
     <!-- Container for div that shows the email -->
     <div
-      class="bg-lightOrange flex justify-center items-center w-full h-[80px] rounded-[5px]"
+      class="bg-lightOrange flex justify-center items-center w-full h-[80px] -350:h-[100px] rounded-[5px]"
     >
       <div
-        class="bg-white w-[90%] h-[50%] rounded-[5px] flex justify-between items-center gap-2 px-4"
+        class="bg-white w-[90%] h-[50%] rounded-[5px] flex -350:flex-col -350:items-center -350:justify-center -350:h-[70%] -350:gap-0 justify-between items-center gap-2 px-4 -350:px-2"
       >
         <div class="flex gap-2 items-center justify-start">
           <img class="h-[80%]" src={mail} alt="" />
@@ -369,9 +369,7 @@
   <div class="logo-box opacity-0 flex flex-col justify-center items-center">
     <img src={logo} class="w-[80px]" alt="" />
   </div>
-  <div
-    class="w-full flex flex-col justify-center items-center pb-10 overflow-hidden relative"
-  >
+  <div class="w-full flex flex-col justify-center items-center pb-10 relative">
     <!-- Rectangle vector that kinda fades in from the heading -->
     <img
       class="h-[60%] w-[90%] -850:w-[98%] -850:h-[80%] left-[50%] translate-x-[-50%] absolute top-0"
@@ -386,14 +384,14 @@
 
       <!-- Circle image -->
       <img
-        class="circle absolute right-[-300px] top-[-10px] w-[120px] -1100:right-[-250px] -1000:right-[-150px] -1000:top-[100px] opacity-0 -800:hidden"
+        class="circle absolute right-[-300px] top-[-10px] w-[120px] -1100:right-[-250px] -1000:right-[-150px] -1000:top-[100px] opacity-0 -800:right-[-80px] -800:top-[120px] -550:max-w-[80px] -550:right-[-110px] -550:top-[140px] z-[-10]"
         src={circle}
         alt=""
       />
 
       <!-- Canvas for the rocket -->
       <canvas
-        class="mx-auto absolute top-[-200px] h-[500px] w-[500px] left-[-380px] -1100:left-[-350px] -1000:left-[-200px] -1000:top-[-100px] z-[-10] max-w-[500px] -800:opacity-0 -800:pointer-events-none"
+        class="mx-auto absolute top-[-200px] h-[500px] w-[500px] left-[-380px] -1100:left-[-350px] -1000:left-[-200px] -1000:top-[-100px] -800:top-[-340px] z-[-10] max-w-[500px] -550:max-w-[350px] -550:left-[-150px]"
         id="canvas"
       ></canvas>
     </h1>
@@ -480,7 +478,13 @@
               }`}
             ></div>
 
-            <p class={` ${hasRegisteredFb ? "opacity-1" : "opacity-0 text-transparent"}`}>Subscribe</p>
+            <p
+              class={` ${
+                hasRegisteredFb ? "opacity-1" : "opacity-0 text-transparent"
+              }`}
+            >
+              Subscribe
+            </p>
           </button>
         </form>
       </div>
